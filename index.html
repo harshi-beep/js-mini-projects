@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Mini Projects</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .clock {
+            font-size: 40px;
+            background: #333;
+            padding: 15px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,212,255,0.4);
+            margin-bottom: 30px;
+        }
+        .calculator {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            width: 300px;
+        }
+        #display {
+            width: 100%;
+            height: 50px;
+            background-color: #333;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 24px;
+            text-align: right;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 15px;
+            font-size: 18px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        button.operator {
+            background-color: #ff9500;
+        }
+        button.operator:hover {
+            background-color: #e08400;
+        }
+        button.clear {
+            background-color: #d4d4d2;
+            color: black;
+        }
+        button.clear:hover {
+            background-color: #b5b5b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Digital Clock</h2>
+    <div class="clock" id="myClock">00:00:00 PM</div>
+
+    <h2>Simple Calculator</h2>
+    <div class="calculator">
+        <input type="text" id="display" readonly>
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button onclick="appendValue('/')" class="operator">/</button>
+            <button onclick="appendValue('*')" class="operator">*</button>
+            <button onclick="appendValue('-')" class="operator">-</button>
+            
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button onclick="appendValue('+')" class="operator">+</button>
+            
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button onclick="calculate()" style="grid-row: span 2; background-color: #00d4ff; color: black;">=</button>
+            
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            
+            <button onclick="appendValue('0')" style="grid-column: span 3;">0</button>
+        </div>
+    </div>
+
+    <script>
+        // --- CLOCK SCRIPT ---
+        function showTime() {
+            let date = new Date();
+            let h = date.getHours(); 
+            let m = date.getMinutes(); 
+            let s = date.getSeconds(); 
+            let session = "AM";
+            
+            if(h == 0) { h = 12; }
+            if(h > 12) { h = h - 12; session = "PM"; }
+            
+            h = (h < 10) ? "0" + h : h;
+            m = (m < 10) ? "0" + m : m;
+            s = (s < 10) ? "0" + s : s;
+            
+            let time = h + ":" + m + ":" + s + " " + session;
+            document.getElementById("myClock").innerText = time;
+            setTimeout(showTime, 1000);
+        }
+        showTime();
+
+        // --- CALCULATOR SCRIPT ---
+        const display = document.getElementById('display');
+
+        function appendValue(input) {
+            display.value += input;
+        }
+
+        function clearDisplay() {
+            display.value = "";
+        }
+
+        function calculate() {
+            try {
+                // eval() takes the text string (like "5+5") and computes the math automatically!
+                display.value = eval(display.value);
+            } catch (error) {
+                display.value = "Error";
+            }
+        }
+    </script>
+</body>
+</html>
